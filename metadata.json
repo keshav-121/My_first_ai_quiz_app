@@ -1,0 +1,6 @@
+{
+  "name": "AI Quiz Generator",
+  "description": "AI-powered quiz application allowing users to generate custom quizzes by subject, chapter, difficulty, and question count.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Quiz Generator | STEM Practice</title>
+    <meta name="description" content="AI-powered quiz application allowing users to generate custom quizzes by subject, chapter, difficulty, and question count." />
+    <meta property="og:title" content="AI Quiz Generator | STEM Practice" />
+    <meta property="og:description" content="AI-powered quiz application allowing users to generate custom quizzes by subject, chapter, difficulty, and question count." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Separate CSS Stylesheet -->
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="header-container">
+        <div class="brand-wrapper">
+          <div class="brand-icon">Q</div>
+          <span class="brand-title">QuizCraft AI</span>
+        </div>
+        <div class="header-meta">
+          <span>AI-Powered Assessment</span>
+          <span class="dot-separator" aria-hidden="true">·</span>
+          <span>Adaptive STEM Quizzer</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container Layout -->
+    <main class="main-wrapper">
+      <!-- Hero Banner -->
+      <section class="hero-banner">
+        <p class="hero-kicker">Interactive Quiz Configuration</p>
+        <h1 class="hero-title">Configure Your Custom Quiz</h1>
+        <p class="hero-description">
+          Select your subject, target chapter, difficulty level, and question volume to generate tailored practice questions with step-by-step explanations.
+        </p>
+      </section>
+
+      <!-- Layout Grid: Form + Live Summary -->
+      <div class="layout-grid">
+        <!-- Form Section Card -->
+        <div class="form-card">
+          <!-- Form Validation Alert -->
+          <div id="form-alert" class="form-alert" role="alert"></div>
+
+          <form id="quiz-setup-form" onsubmit="return false;">
+            <!-- 1. Subject Selection -->
+            <div class="form-section">
+              <div class="section-label-group">
+                <label class="section-title">
+                  <span>1. Subject</span>
+                </label>
+                <span class="section-hint">Select a STEM discipline</span>
+              </div>
+
+              <div class="subject-grid">
+                <!-- Physics -->
+                <label class="subject-option" data-subject="physics">
+                  <input type="radio" name="subject" value="physics" checked />
+                  <div class="subject-box">
+                    <div class="subject-icon-wrap">⚛️</div>
+                    <div class="subject-name">Physics</div>
+                    <div class="subject-subtext">Mechanics, optics, thermodynamics & electromagnetism</div>
+                  </div>
+                </label>
+
+                <!-- Chemistry -->
+                <label class="subject-option" data-subject="chemistry">
+                  <input type="radio" name="subject" value="chemistry" />
+                  <div class="subject-box">
+                    <div class="subject-icon-wrap">🧪</div>
+                    <div class="subject-name">Chemistry</div>
+                    <div class="subject-subtext">Organic reactions, bonding, kinetics & equilibrium</div>
+                  </div>
+                </label>
+
+                <!-- Mathematics -->
+                <label class="subject-option" data-subject="mathematics">
+                  <input type="radio" name="subject" value="mathematics" />
+                  <div class="subject-box">
+                    <div class="subject-icon-wrap">📐</div>
+                    <div class="subject-name">Mathematics</div>
+                    <div class="subject-subtext">Calculus, algebra, geometry & probability</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- 2. Chapter / Topic Selection -->
+            <div class="form-section">
+              <div class="section-label-group">
+                <label for="chapter-input" class="section-title">
+                  <span>2. Chapter / Topic</span>
+                </label>
+                <span class="section-hint">Type or select recommended chapters</span>
+              </div>
+
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  id="chapter-input"
+                  class="text-input"
+                  placeholder="e.g. Kinematics, Chemical Bonding, Calculus..."
+                  autocomplete="off"
+                  required
+                />
+
+                <div class="chapter-suggestions-container">
+                  <span class="suggestions-label">Popular Chapters:</span>
+                  <div id="chapter-chips" class="suggestions-chips">
+                    <!-- Populated dynamically by script.js -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Difficulty Level -->
+            <div class="form-section">
+              <div class="section-label-group">
+                <label class="section-title">
+                  <span>3. Difficulty</span>
+                </label>
+                <span class="section-hint">Calibrate cognitive complexity</span>
+              </div>
+
+              <div class="difficulty-group">
+                <!-- Easy -->
+                <label class="difficulty-option">
+                  <input type="radio" name="difficulty" value="easy" />
+                  <div class="difficulty-box">
+                    <div class="difficulty-title">Easy</div>
+                    <div class="difficulty-desc">Definitions & fundamentals</div>
+                  </div>
+                </label>
+
+                <!-- Medium -->
+                <label class="difficulty-option">
+                  <input type="radio" name="difficulty" value="medium" checked />
+                  <div class="difficulty-box">
+                    <div class="difficulty-title">Medium</div>
+                    <div class="difficulty-desc">Conceptual & multi-step</div>
+                  </div>
+                </label>
+
+                <!-- Hard -->
+                <label class="difficulty-option">
+                  <input type="radio" name="difficulty" value="hard" />
+                  <div class="difficulty-box">
+                    <div class="difficulty-title">Hard</div>
+                    <div class="difficulty-desc">Advanced analysis & synthesis</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- 4. Number of Questions -->
+            <div class="form-section">
+              <div class="section-label-group">
+                <label class="section-title">
+                  <span>4. Number of Questions</span>
+                </label>
+                <span class="section-hint">Select question quantity</span>
+              </div>
+
+              <div class="questions-group">
+                <!-- 5 Questions -->
+                <label class="questions-option">
+                  <input type="radio" name="questionCount" value="5" />
+                  <div class="questions-box">
+                    <div class="questions-number">5</div>
+                    <div class="questions-desc">Quick Drill (~5 min)</div>
+                  </div>
+                </label>
+
+                <!-- 10 Questions -->
+                <label class="questions-option">
+                  <input type="radio" name="questionCount" value="10" checked />
+                  <div class="questions-box">
+                    <div class="questions-number">10</div>
+                    <div class="questions-desc">Standard (~10 min)</div>
+                  </div>
+                </label>
+
+                <!-- 20 Questions -->
+                <label class="questions-option">
+                  <input type="radio" name="questionCount" value="20" />
+                  <div class="questions-box">
+                    <div class="questions-number">20</div>
+                    <div class="questions-desc">Deep Exam (~20 min)</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="form-actions">
+              <button type="submit" id="generate-quiz-btn" class="btn-generate">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+                </svg>
+                Generate a Quiz
+              </button>
+              <button type="button" id="reset-form-btn" class="btn-reset">
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Sidebar / Live Parameters Card -->
+        <aside class="sidebar-panel">
+          <div class="summary-card">
+            <div class="summary-header">
+              <span>Quiz Summary</span>
+              <span class="summary-badge-live">Ready</span>
+            </div>
+
+            <div class="summary-list">
+              <div class="summary-item">
+                <span class="summary-key">Subject:</span>
+                <span class="summary-val" id="summary-subject">Physics</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-key">Chapter:</span>
+                <span class="summary-val" id="summary-chapter">Kinematics & 1D/2D Motion</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-key">Difficulty:</span>
+                <span class="summary-val" id="summary-difficulty">Medium</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-key">Question Count:</span>
+                <span class="summary-val" id="summary-count">10 Questions</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-key">Est. Duration:</span>
+                <span class="summary-val" id="summary-est-time">~10 mins</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-key">Format:</span>
+                <span class="summary-val">MCQ + Solutions</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Educational Feature Perks -->
+          <div class="perks-card">
+            <div class="perk-item">
+              <div class="perk-icon">🎯</div>
+              <div class="perk-text">
+                <h4>Syllabus Aligned</h4>
+                <p>Standardized questions covering curriculum key concepts</p>
+              </div>
+            </div>
+            <div class="perk-item">
+              <div class="perk-icon">💡</div>
+              <div class="perk-text">
+                <h4>Detailed Explanations</h4>
+                <p>Instant derivations and conceptual breakdowns for each question</p>
+              </div>
+            </div>
+            <div class="perk-item">
+              <div class="perk-icon">⚡</div>
+              <div class="perk-text">
+                <h4>Instant Feedback</h4>
+                <p>Live scoring and comprehensive accuracy analytics</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Section Revealed upon Quiz Generation -->
+      <section id="quiz-active-section" class="quiz-active-container" aria-live="polite">
+        <!-- Rendered dynamically by script.js -->
+      </section>
+    </main>
+
+    <!-- Separate JavaScript File -->
+    <script type="module" src="/src/script.js"></script>
+  </body>
+</html>
